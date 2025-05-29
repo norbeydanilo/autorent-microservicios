@@ -16,19 +16,19 @@ jobs:
       - name: Verificar autorent-api-usuarios
         working-directory: ./autorent-api-usuarios
         run: |
-          docker build -t test-usuarios .
+          docker build --no-cache -t autorent/test-usuarios .
 
       - name: Verificar autorent-api-vehiculos
         working-directory: ./autorent-api-vehiculos
         run: |
-          docker build -t test-vehiculos .
+          docker build --no-cache -t autorent/test-vehiculos .
 
       - name: Verificar autorent-api-gateway
         working-directory: ./autorent-api-gateway
         run: |
-          docker build -t test-gateway .
+          docker build --no-cache -t autorent/test-gateway .
 
       - name: Verificar autorent-cliente
         working-directory: ./autorent-cliente
         run: |
-          docker build -t test-cliente .
+          docker build --no-cache -t autorent/test-cliente .
