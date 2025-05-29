@@ -1,0 +1,52 @@
+# General
+.env
+*.env
+*.log
+.DS_Store
+*.bak
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# VSCode
+.vscode/
+
+# Docker
+**/dist/
+**/coverage/
+docker-compose.override.yml
+
+# Vue (Vite o Vue CLI)
+autorent-cliente/dist/
+autorent-cliente/.vite/
+
+# Logs
+logs/
+*.log
+
+# System files
+Thumbs.db
+ehthumbs.db
+Icon?
+Desktop.ini
+
+# OS-specific
+*.swp
+*.swo
+
+# IDEs
+.idea/
+*.iml
+*.sublime*
+
+# Build artifacts
+*.tsbuildinfo
+
+# Optional: ignore uploads, dumps, temp files
+/tmp/
+upload/
+*.sql

@@ -1,0 +1,68 @@
+services:
+
+  mysql:
+    image: mysql:8
+    container_name: autorent-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: Norbey+980427
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  usuarios:
+    build:
+      context: ./autorent-api-usuarios
+    container_name: autorent-usuarios
+    ports:
+      - "3001:3001"
+    depends_on:
+      - mysql
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: Norbey+980427
+      DB_NAME: usuarios
+
+  vehiculos:
+    build:
+      context: ./autorent-api-vehiculos
+    container_name: autorent-vehiculos
+    ports:
+      - "3002:3002"
+    depends_on:
+      - mysql
+    environment:
+      DB_NAME: vehiculos
+      DB_USER: root
+      DB_PORT: 3306
+      DB_PASSWORD: Norbey+980427
+      DB_HOST: mysql
+
+  gateway:
+    build:
+      context: ./autorent-api-gateway
+    container_name: autorent-gateway
+    ports:
+      - "3000:3000"
+    depends_on:
+      - usuarios
+
+  cliente:
+    build:
+      context: ./autorent-cliente
+    container_name: autorent-cliente
+    ports:
+      - "5173:5173"
+    command: npm run dev
+    volumes:
+      - ./autorent-cliente:/app
+      - /app/node_modules
+    depends_on:
+      - gateway
+
+volumes:
+  mysql_data:
