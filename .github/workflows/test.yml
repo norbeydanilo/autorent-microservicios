@@ -1,0 +1,34 @@
+name: Validar microservicios en dev
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Verificar autorent-api-usuarios
+        working-directory: ./autorent-api-usuarios
+        run: |
+          docker build -t test-usuarios .
+
+      - name: Verificar autorent-api-vehiculos
+        working-directory: ./autorent-api-vehiculos
+        run: |
+          docker build -t test-vehiculos .
+
+      - name: Verificar autorent-api-gateway
+        working-directory: ./autorent-api-gateway
+        run: |
+          docker build -t test-gateway .
+
+      - name: Verificar autorent-cliente
+        working-directory: ./autorent-cliente
+        run: |
+          docker build -t test-cliente .
