@@ -1,6 +1,6 @@
 # General
-.env
-*.env
+.env*
+*.env*
 *.log
 .DS_Store
 *.bak

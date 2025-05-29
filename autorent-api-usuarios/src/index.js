@@ -8,6 +8,7 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 app.use('/', usuariosRoutes);
+app.get('/health', (_, res) => res.status(200).send('OK'));
 
 async function conectarDB() {
   let connected = false;
