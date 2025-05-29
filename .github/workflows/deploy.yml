@@ -34,3 +34,15 @@ jobs:
         run: |
           docker build -t ${{ secrets.AZURE_ACR_LOGIN_SERVER }}/vehiculos:latest .
           docker push ${{ secrets.AZURE_ACR_LOGIN_SERVER }}/vehiculos:latest
+
+      - name: Build and push Gateway
+        working-directory: ./autorent-api-gateway
+        run: |
+          docker build -t ${{ secrets.AZURE_ACR_LOGIN_SERVER }}/gateway:latest .
+          docker push ${{ secrets.AZURE_ACR_LOGIN_SERVER }}/gateway:latest
+
+      - name: Build and push Cliente
+        working-directory: ./autorent-cliente
+        run: |
+          docker build -t ${{ secrets.AZURE_ACR_LOGIN_SERVER }}/cliente:latest .
+          docker push ${{ secrets.AZURE_ACR_LOGIN_SERVER }}/cliente:latest
