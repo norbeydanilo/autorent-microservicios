@@ -8,24 +8,29 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 app.use('/', usuariosRoutes);
-app.get('/health', (_, res) => res.status(200).send('OK'));
 
-async function conectarDB() {
-  let connected = false;
-  while (!connected) {
+async function conectarDB(maxIntentos = 5, intervalo = 3000) {
+  let intentos = 0;
+  while (intentos < maxIntentos) {
     try {
       await sequelize.authenticate();
       console.log("✅ Conectado a MySQL");
-      connected = true;
+      return;
     } catch (err) {
-      console.log("⏳ Esperando MySQL...", err.message);
-      await new Promise(res => setTimeout(res, 3000));
+      intentos++;
+      console.log(`⏳ Intento ${intentos} de conexión a MySQL fallido. Reintentando en ${intervalo / 1000}s...`);
+      console.log(`🔍 Detalle: ${err.message}`);
+      await new Promise(res => setTimeout(res, intervalo));
     }
   }
+  console.error("❌ No se pudo conectar a MySQL luego de varios intentos. Terminando ejecución.");
+  process.exit(1); // termina la app para que Azure pueda reiniciarla o alertar
 }
 
 await conectarDB();
 
 sequelize.sync().then(() => {
-  app.listen(3001, () => console.log('Usuarios API en puerto 3001'));
+  const port = process.env.PORT || 3001;
+  app.listen(port, () => console.log(`🚀 Usuarios API corriendo en puerto ${port}`));
 });
+
