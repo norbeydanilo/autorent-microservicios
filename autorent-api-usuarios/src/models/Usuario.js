@@ -8,3 +8,6 @@ const Usuario = sequelize.define('Usuario', {
 });
 
 export default Usuario;
+
+
+
